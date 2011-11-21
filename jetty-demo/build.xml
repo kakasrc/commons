@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+	<property name="build_dir" value="../build" />
+	<property name="lib_dir" value="../lib" />
+	<property name="war_dir" value="../war"/>
+
+
+	<path id="classpath">
+		<fileset dir="${lib_dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="war" depends="compile">
+		<war destfile="${war_dir}/demo.war" webxml="web.xml">
+			<lib dir="../lib" />
+			<classes dir="${build_dir}" />
+			<webinf dir="." includes="geronimo-web.xml,log4j.properties" />
+		</war>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="." destdir="${build_dir}" encoding="utf-8"
+			debug="true" includeantruntime="true">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="init">
+		<mkdir dir="${build_dir}" />
+		<copy todir="${build_dir}/org">
+			<fileset dir="../bin/org" />
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${build_dir}">
+			</fileset>
+		</delete>
+	</target>
+
+</project>
+
+

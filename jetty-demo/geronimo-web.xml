@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1"
+         xmlns:sys="http://geronimo.apache.org/xml/ns/deployment-1.2"
+         xmlns:naming="http://geronimo.apache.org/xml/ns/naming-1.2"
+         xmlns:web="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1">
+
+    <sys:environment>
+        <sys:moduleId>
+            <sys:groupId>default</sys:groupId>
+            <sys:artifactId>kakaDemo</sys:artifactId>
+            <sys:version>1.0</sys:version>
+            <sys:type>car</sys:type>
+        </sys:moduleId>
+	</sys:environment> 
+
+	<web:context-root>/</web:context-root>
+    <naming:web-container>
+    	<naming:gbean-link>JettyWebContainer</naming:gbean-link>
+    </naming:web-container> 
+    
+	<gbean name="JettyWebConnector" 
+    	class="org.apache.geronimo.jetty7.connector.HTTPSelectChannelConnector">
+        <attribute name="host">0.0.0.0</attribute>
+        <attribute name="port">5080</attribute>
+        <reference name="JettyContainer">
+            <name>JettyWebContainer</name>
+        </reference>
+    </gbean>
+    
+	<gbean name="JettyWebContainer" class="org.apache.geronimo.jetty7.JettyContainerImpl">
+        <reference name="ServerInfo">
+            <name>ServerInfo</name>
+        </reference>
+    </gbean>
+       
+</web-app>
